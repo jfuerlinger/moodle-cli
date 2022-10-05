@@ -6,7 +6,7 @@ Simple utility to fetch to moodle api.
 
 ## Getting started
 
-Define two Environment varialbles:
+Define two Environment variables:
 
  - MOODLE_USER
  - MOODLE_PASSWORD
