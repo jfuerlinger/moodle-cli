@@ -1,18 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.12" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.12" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MoodleCli.Core\MoodleCli.Core.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MoodleCli.Core\MoodleCli.Core.csproj" />
+    </ItemGroup>
 
 </Project>
