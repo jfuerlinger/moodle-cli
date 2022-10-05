@@ -2,6 +2,8 @@
 
 Simple utility to fetch to moodle api.
 
+![MoodleCLIInProgress](moodle-cli.gif)
+
 ## Getting started
 
 Define two Environment varialbles:
