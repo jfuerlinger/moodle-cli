@@ -1,6 +1,6 @@
 # Moodle CLI
 
-Simple utility to fetch to moodle api.
+Simple utility to fetch the moodle api.
 
 ![MoodleCLIInProgress](moodle-cli.gif)
 
