@@ -2,6 +2,7 @@
 using MoodleCli.Core.Model.Reponses;
 using MoodleCli.Core.Services;
 using Spectre.Console;
+using System.Data;
 
 namespace MoodleCli.ConsoleApp
 {
@@ -16,6 +17,10 @@ namespace MoodleCli.ConsoleApp
                 username: MoodleUser ?? throw new ArgumentNullException("MOODLE_USER"),
                 password: MoodlePassword ?? throw new ArgumentNullException("MOODLE_PASSWORD"));
             ICompilerService compilerService = new CompilerService();
+
+
+            
+
 
             User currentUser = await GetCurrentMoodleUser(moodleService);
             Course[] courses = await LoadCourses(moodleService, currentUser);
@@ -35,11 +40,12 @@ namespace MoodleCli.ConsoleApp
 
             (SubmissionFile, Stream)[] downloadedFiles = await DownloadSubmissionFiles(moodleService, submissions);
 
-            AnsiConsole.Write(await GenerateResultTableAsync(compilerService, downloadedFiles));
+            AnsiConsole.Write(await GenerateResultTableAsync(compilerService, moodleService, downloadedFiles));
         }
 
         private async static Task<Table> GenerateResultTableAsync(
             ICompilerService compilerService,
+            IMoodleService moodleService,
             (SubmissionFile, Stream)[] downloadedFiles)
         {
             return await AnsiConsole
@@ -47,6 +53,8 @@ namespace MoodleCli.ConsoleApp
                  .StartAsync("Compiling the files ...",
                  async ctx =>
                  {
+                     await MapUserIdsToUserNamesAsync(moodleService, downloadedFiles);
+
                      var table = new Table();
 
                      table.AddColumn("Schüler");
@@ -55,12 +63,12 @@ namespace MoodleCli.ConsoleApp
                      table.AddColumn(new TableColumn("Fehler").Centered());
                      table.AddColumn(new TableColumn("Warnungen").Centered());
 
-                     foreach (var submission in downloadedFiles)
+                     foreach (var submission in downloadedFiles.OrderBy(entry => entry.Item1.UserFullName))
                      {
                          (int CntErrors, int CntWarnings, List<string> ErrorMessages) = await compilerService.CompileAsync(submission.Item2);
 
                          table.AddRow(
-                               $"[blue]{submission.Item1.UserId}[/]"
+                               $"[blue]{GetPupilIdentity(submission.Item1)}[/]"
                              , $"{submission.Item1.Filename}"
                              , $"{submission.Item1.Size} B"
                              , $"{GetColoredMarkupForNumber(CntErrors, "red")}"
@@ -68,6 +76,11 @@ namespace MoodleCli.ConsoleApp
                      }
 
                      return table;
+
+                     static string GetPupilIdentity(SubmissionFile submissionFile) 
+                        => !string.IsNullOrEmpty(submissionFile.UserFullName) ?
+                                submissionFile.UserFullName :
+                                submissionFile.UserId.ToString();
 
                      static string GetColoredMarkupForNumber(int number, string color)
                      {
@@ -83,7 +96,26 @@ namespace MoodleCli.ConsoleApp
                  });
         }
 
-        
+        private async static Task MapUserIdsToUserNamesAsync(
+            IMoodleService moodleService, 
+            (SubmissionFile, Stream)[] downloadedFiles)
+        {
+            var userIds = downloadedFiles
+                                    .Select(download => download.Item1.UserId)
+                                    .Distinct()
+                                    .ToArray();
+
+            var userDetails = (await moodleService.GetUserDetailsByIdsAsync(userIds))
+                                   .ToDictionary(userDetail => userDetail.Id, userDetail => userDetail.FullName);
+                
+            foreach(var file in downloadedFiles)
+            {
+                if(userDetails.ContainsKey(file.Item1.UserId))
+                {
+                    file.Item1.UserFullName = userDetails[file.Item1.UserId];
+                }
+            }
+        }
 
         private static async Task<(SubmissionFile, Stream)[]> DownloadSubmissionFiles(IMoodleService moodleService, SubmissionFile[] submissions)
         {

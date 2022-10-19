@@ -1,7 +1,9 @@
 ﻿using MoodleCli.Core.Model;
 using MoodleCli.Core.Model.Reponses;
+using System;
 using System.Net.Http.Json;
 using System.Web;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoodleCli.Core.Services
 {
@@ -11,6 +13,7 @@ namespace MoodleCli.Core.Services
         private readonly string _username;
         private readonly string _password;
         private string? _token;
+        private object _;
 
         public MoodleService(string username, string password)
         {
@@ -31,6 +34,25 @@ namespace MoodleCli.Core.Services
         {
             string url = submissionFile.Url!.Replace(_httpClient.BaseAddress!.ToString(), string.Empty);
             return (submissionFile, await _httpClient.GetStreamAsync($"{url}?token={_token}"));
+        }
+
+        public async Task<UserDetails[]> GetUserDetailsByIdsAsync(int[] ids)
+        {
+            var parameters = new Dictionary<string, string>
+            {
+                { "field", "id" }
+            };
+
+            for (int i = 0; i < ids.Length; i++)
+            {
+                parameters.Add($"values[{i}]", ids[i].ToString());
+            }
+
+            var users = await FetchDataAsync<UserDetails[]>(
+                "core_user_get_users_by_field",
+                parameters);
+
+            return users!;
         }
 
         public async Task<SubmissionFile[]> GetSubmissionsForAssignmentAsync(int assignmentId)

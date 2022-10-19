@@ -9,6 +9,7 @@ namespace MoodleCli.Core.Services
         Task<Assignment[]> GetAssignmentsForCourse(int courseId);
         Task<User?> GetCurrentUsersInfos();
         Task<SubmissionFile[]> GetSubmissionsForAssignmentAsync(int assignmentId);
+        Task<UserDetails[]> GetUserDetailsByIdsAsync(int[] ids);
         Task<Course[]> GetUsersCoursesAsync(int userId);
     }
 }
