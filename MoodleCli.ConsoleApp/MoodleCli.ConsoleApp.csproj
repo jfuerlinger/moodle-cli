@@ -6,10 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>preview</LangVersion>
+        <AssemblyName>moodle-cli</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.12" />
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
 
     <ItemGroup>
