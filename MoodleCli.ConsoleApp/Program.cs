@@ -18,28 +18,29 @@ namespace MoodleCli.ConsoleApp
                 password: MoodlePassword ?? throw new ArgumentNullException("MOODLE_PASSWORD"));
             ICompilerService compilerService = new CompilerService();
 
-
-            
-
-
             User currentUser = await GetCurrentMoodleUser(moodleService);
             Course[] courses = await LoadCourses(moodleService, currentUser);
 
+            Console.Clear();
             int courseId = LetUserChooseFromCourses(courses);
             Course selectedCourse = courses.Single(entry => entry.Id == courseId);
             AnsiConsole.Write(new Markup($"You choose the course [green]{selectedCourse.FullName}[/]!"));
 
+            Console.Clear();
             Assignment[] assignments = await LoadAssignments(moodleService, selectedCourse);
             int assignmentId = LetUserChooseFromAssignments(assignments);
 
             Assignment selectedAssignment = assignments.Single(entry => entry.Id == assignmentId);
             AnsiConsole.Write(new Markup($"You choose the assignment [green]{selectedAssignment.Name}[/]!"));
 
+            Console.Clear();
             SubmissionFile[] submissions = await LoadSubmissions(moodleService, selectedAssignment);
             AnsiConsole.Write(new Markup($"Found [green]{submissions.Length} submissions[/]!"));
 
+            Console.Clear();
             (SubmissionFile, Stream)[] downloadedFiles = await DownloadSubmissionFiles(moodleService, submissions);
 
+            Console.Clear();
             AnsiConsole.Write(await GenerateResultTableAsync(compilerService, moodleService, downloadedFiles));
         }
 
