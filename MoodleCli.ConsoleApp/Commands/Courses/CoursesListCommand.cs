@@ -26,7 +26,6 @@ namespace MoodleCli.ConsoleApp.Commands.Courses
                      table.AddRow(new string[] { course.Id.ToString(), course.ShortName! });
                  }
 
-                 Console.Clear();
                  AnsiConsole.Write(table);
              });
         }

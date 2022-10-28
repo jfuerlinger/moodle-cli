@@ -23,6 +23,16 @@ Define two Environment variables:
 
 ![HelpCommand](./assets/screenshot_help_command.png)
 
+### List courses command
+
+```
+ moodle-cli.exe courses list
+ ```
+
+![ListCoursesCommand](./assets/screenshot_result_courses_list_command.png)
+
+
+
 ### List assignments command
 
 ```
