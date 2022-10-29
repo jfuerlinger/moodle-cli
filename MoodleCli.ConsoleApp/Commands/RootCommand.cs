@@ -16,7 +16,7 @@ namespace MoodleCli.ConsoleApp.Commands
 
         public MoodleCliRootCommand(
             IMoodleService moodleService,
-            ICompilerService compilerService) : base("Moodle CLI (by Josef Fürlinger)")
+            ICompilerService compilerService) : base("Moodle CLI")
         {
             _moodleService = moodleService;
             _compilerService = compilerService;
