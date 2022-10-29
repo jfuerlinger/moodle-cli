@@ -12,15 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.0'
         dotnet-quality: 'preview'
+    
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+    
+    - name: Build and Publish
+      run: |
+        dotnet build --configuration Release --no-restore
+        mkdir ../binaries/
+        dotnet publish -c Release -o ../binaries/linux-x64 -r linux-x64  --no-build --self-contained true
+        dotnet publish -c Release -o ../binaries/win-x64 -r win-x64  --no-build --self-contained true
+    
     - name: Test
       run: dotnet test --no-build --verbosity normal
