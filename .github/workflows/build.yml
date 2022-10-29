@@ -23,13 +23,64 @@ jobs:
     
     - name: Restore dependencies
       run: dotnet restore
-    
-    - name: Build and Publish
-      run: |
-        dotnet build --configuration Release --no-restore
-        mkdir ../binaries/
-        dotnet publish -c Release -o ../binaries/linux-x64 -r linux-x64  --self-contained true
-        dotnet publish -c Release -o ../binaries/win-x64 -r win-x64 --self-contained true
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
     
     - name: Test
       run: dotnet test --verbosity normal
+      
+    - name: Publish
+      run: |
+        mkdir ../releases/
+        mkdir ../publish/
+        dotnet publish -c Release -o ../publish/linux-x64 -r linux-x64  --self-contained true
+        dotnet publish -c Release -o ../publish/win-x64 -r win-x64 --self-contained true
+      
+    - name: Archive Release (linux-x64)
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: '../releases/moodle-cli-linux-x64.zip'
+        path: '../publish/linux-x64/'
+        exclusions: '*.git*'       
+
+    - name: Check for zip-files
+      run: |
+        ls -al ../releases/
+        ls -al ../publish/
+        ls -al ../publish/win-x64/
+        ls -al ../publish/linux-x64/
+
+
+    - name: Archive Release (win-x64)
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: '../releases/moodle-cli-win-x64.zip'
+        path: '../publish/win-x64/'
+        exclusions: '*.git*'       
+      
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: release
+        release_name: v1.0
+        draft: true
+        prerelease: false
+
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ../releases/moodle-cli-win-x64.zip
+        asset_name: moodle-cli-win-x64.zip
+        asset_content_type: application/zip
+
+    - uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}      
