@@ -104,8 +104,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.sem_version.outputs.version_tag }}
-        release_name: latest
+        tag_name: v${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}
+        release_name: moodle-cli
         draft: true
         prerelease: false
 
@@ -116,7 +116,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ../releases/moodle-cli-win-x64.zip
-        asset_name: moodle-cli-win-x64-${{ steps.sem_version.outputs.version }}.zip
+        asset_name: moodle-cli-win-x64-v${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}.zip
         asset_content_type: application/zip
 
     - name: Upload linux-x64 version 
@@ -126,7 +126,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ../releases/moodle-cli-linux-x64.zip
-        asset_name: moodle-cli-linux-x64-${{ steps.sem_version.outputs.version }}.zip
+        asset_name: moodle-cli-linux-x64-v${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}.zip
         asset_content_type: application/zip
 
 
