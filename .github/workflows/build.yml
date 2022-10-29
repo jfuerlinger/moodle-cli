@@ -41,14 +41,14 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         filename: '../releases/moodle-cli-linux-x64.zip'
-        path: '../publish/linux-x64/'
+        path: '../publish/linux-x64'
         exclusions: '*.git*'       
 
     - name: Archive Release (win-x64)
       uses: thedoctor0/zip-release@master
       with:
         filename: '../releases/moodle-cli-win-x64.zip'
-        path: '../publish/win-x64/'
+        path: '../publish/win-x64'
         exclusions: '*.git*'       
 
 
