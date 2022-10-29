@@ -82,21 +82,12 @@ jobs:
         path: '../publish/win-x64'
         exclusions: '*.git*'       
 
-
     - name: Check for zip-files
       run: |
         ls -al ../releases/
         ls -al ../publish/
         ls -al ../publish/win-x64/
         ls -al ../publish/linux-x64/
-
-
-    - name: Archive Release (win-x64)
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: '../releases/moodle-cli-win-x64.zip'
-        path: '../publish/win-x64/'
-        exclusions: '*.git*'       
 
     - name: Create Draft Release
       id: create_release
