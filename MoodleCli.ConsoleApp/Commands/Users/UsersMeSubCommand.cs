@@ -24,7 +24,11 @@ namespace MoodleCli.ConsoleApp.Commands.Users
                 throw new Exception("Can't retrieve infos to the current user!");
             }
 
-            AnsiConsole.Markup($"Hello [red]{currentUser.FirstName} {currentUser.LastName}[/]!\nYour id is [red]{currentUser.Id}[/]");
+            var usersCourses = await LoadCourses(_moodleService, currentUser);
+
+            AnsiConsole.Markup($"Hello [red]{currentUser.FirstName} {currentUser.LastName}[/]!");
+            AnsiConsole.Markup($"Your id is [red]{currentUser.Id}[/] and you're entitled in [red]{usersCourses.Count()} courses[/]");
+            
         }
 
         private static async Task<User> GetCurrentMoodleUser(IMoodleService moodleService)
@@ -33,6 +37,13 @@ namespace MoodleCli.ConsoleApp.Commands.Users
                 .Status()
                 .StartAsync("Loading user data...",
                 async ctx => await moodleService.GetCurrentUsersInfos() ?? throw new Exception("There was a problem loading the user details"));
+        }
+
+        private static async Task<Course[]> LoadCourses(IMoodleService moodleService, User currentUser)
+        {
+            return await AnsiConsole
+                .Status()
+                .StartAsync("Loading courses...", async ctx => await moodleService.GetUsersCoursesAsync(currentUser.Id));
         }
     }
 }
