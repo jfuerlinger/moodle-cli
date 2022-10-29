@@ -7,7 +7,7 @@ namespace MoodleCli.ConsoleApp.Commands.Courses
     {
         public CoursesCommand(IMoodleService moodleService) : base("courses", "Operates on Moodle Coures entitled by the user.")
         {
-            AddCommand(new CoursesListCommand(moodleService));
+            AddCommand(new CoursesListSubCommand(moodleService));
         }
     }
 }

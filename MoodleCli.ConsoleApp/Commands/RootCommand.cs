@@ -1,5 +1,6 @@
 ﻿using MoodleCli.ConsoleApp.Commands.Assignments;
 using MoodleCli.ConsoleApp.Commands.Courses;
+using MoodleCli.ConsoleApp.Commands.Users;
 using MoodleCli.Core.Model;
 using MoodleCli.Core.Model.Reponses;
 using MoodleCli.Core.Services;
@@ -24,6 +25,7 @@ namespace MoodleCli.ConsoleApp.Commands
 
             AddCommand(new CoursesCommand(moodleService));
             AddCommand(new AssignmentsCommand(moodleService));
+            AddCommand(new UsersCommand(moodleService));
         }
 
         private async Task Execute()

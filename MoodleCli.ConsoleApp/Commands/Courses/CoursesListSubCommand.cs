@@ -5,9 +5,9 @@ using System.CommandLine;
 
 namespace MoodleCli.ConsoleApp.Commands.Courses
 {
-    internal class CoursesListCommand : Command
+    internal class CoursesListSubCommand : Command
     {
-        public CoursesListCommand(IMoodleService moodleService) : base("list", "List all the Moodle courses entitled by the user.")
+        public CoursesListSubCommand(IMoodleService moodleService) : base("list", "List all the Moodle courses entitled by the user.")
         {
             this.SetHandler(async () =>
              {

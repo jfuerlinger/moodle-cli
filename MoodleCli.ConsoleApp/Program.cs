@@ -1,14 +1,6 @@
 ﻿using MoodleCli.ConsoleApp.Commands;
-using MoodleCli.ConsoleApp.Commands.Assignments;
-using MoodleCli.ConsoleApp.Commands.Courses;
-using MoodleCli.Core.Model;
-using MoodleCli.Core.Model.Reponses;
 using MoodleCli.Core.Services;
-using Spectre.Console;
 using System.CommandLine;
-using System.Data;
-using Course = MoodleCli.Core.Model.Course;
-using RootCommand = MoodleCli.ConsoleApp.Commands.MoodleCliRootCommand;
 
 namespace MoodleCli.ConsoleApp
 {
