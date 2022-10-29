@@ -28,8 +28,8 @@ jobs:
       run: |
         dotnet build --configuration Release --no-restore
         mkdir ../binaries/
-        dotnet publish -c Release -o ../binaries/linux-x64 -r linux-x64  --no-build --self-contained true
-        dotnet publish -c Release -o ../binaries/win-x64 -r win-x64  --no-build --self-contained true
+        dotnet publish -c Release -o ../binaries/linux-x64 -r linux-x64  --self-contained true
+        dotnet publish -c Release -o ../binaries/win-x64 -r win-x64 --self-contained true
     
     - name: Test
       run: dotnet test --no-build --verbosity normal
