@@ -44,6 +44,14 @@ jobs:
         path: '../publish/linux-x64/'
         exclusions: '*.git*'       
 
+    - name: Archive Release (win-x64)
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: '../releases/moodle-cli-win-x64.zip'
+        path: '../publish/win-x64/'
+        exclusions: '*.git*'       
+
+
     - name: Check for zip-files
       run: |
         ls -al ../releases/
@@ -70,7 +78,8 @@ jobs:
         draft: true
         prerelease: false
 
-    - uses: actions/upload-release-asset@v1.0.1
+    - name: Upload win-x64 version 
+      uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -78,6 +87,17 @@ jobs:
         asset_path: ../releases/moodle-cli-win-x64.zip
         asset_name: moodle-cli-win-x64.zip
         asset_content_type: application/zip
+
+    - name: Upload linux-x64 version 
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ../releases/moodle-cli-linux-x64.zip
+        asset_name: moodle-cli-linux-x64.zip
+        asset_content_type: application/zip
+
 
     - uses: eregon/publish-release@v1
       env:
