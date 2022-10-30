@@ -2,7 +2,7 @@
 
 Simple utility to fetch the moodle api.
 
-![MoodleCLIInProgress](./assets/moodle-cli.gif)
+![MoodleCLIInProgress](./assets/moodle-cli.gif)ddd
 
 ## Getting started
 
