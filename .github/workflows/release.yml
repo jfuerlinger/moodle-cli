@@ -46,6 +46,10 @@ jobs:
         # The output method used to generate list of users, 'csv' or 'json'.
         user_format_type: "csv"
 
+    - name: Debugging (version)
+      run: |
+        echo ${{ steps.sem_version.outputs.version_type }}
+
 
     - name: Setup .NET
       if: ${{ steps.sem_version.outputs.version_type }} == 'minor'
