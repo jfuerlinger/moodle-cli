@@ -48,11 +48,13 @@ jobs:
 
 
     - name: Setup .NET
+      if: ${{ steps.sem_version.outputs.version_type }} == 'minor'
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.0'
     
     - name: Restore dependencies
+      if: ${{ steps.sem_version.outputs.version_type }} == 'minor'
       run: dotnet restore
 
     - name: Build
