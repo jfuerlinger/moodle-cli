@@ -141,7 +141,8 @@ namespace MoodleCli.ConsoleApp.Commands
         private static async Task<(SubmissionFile, Stream)[]> DownloadSubmissionFilesAsync(IMoodleService moodleService, SubmissionFile[] submissions)
         {
             List<Task<(SubmissionFile, Stream)>> downloads = new List<Task<(SubmissionFile, Stream)>>();
-            foreach (var submission in submissions)
+            foreach (var submission in submissions
+                .Where(submission => submission.Filename!.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)))
             {
                 downloads.Add(moodleService.DownloadSubmissionFileAsync(submission));
             }
