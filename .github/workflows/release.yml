@@ -83,10 +83,12 @@ jobs:
 
     - name: Check for zip-files
       run: |
+        echo v${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}
         ls -al ../releases/
         ls -al ../publish/
         ls -al ../publish/win-x64/
         ls -al ../publish/linux-x64/
+        
 
     - name: Create Draft Release
       id: create_release
