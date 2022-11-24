@@ -14,9 +14,11 @@ namespace MoodleCli.ConsoleApp
             using IMoodleService moodleService = new MoodleService(
              username: MoodleUser ?? throw new ArgumentNullException("MOODLE_USER"),
              password: MoodlePassword ?? throw new ArgumentNullException("MOODLE_PASSWORD"));
-            ICompilerService compilerService = new CompilerService();
 
-            return await new MoodleCliRootCommand(moodleService, compilerService).InvokeAsync(args);
+            ICompilerService compilerService = new CompilerService();
+            IUnitTestService unitTestService = new UnitTestService();
+
+            return await new MoodleCliRootCommand(moodleService, compilerService, unitTestService).InvokeAsync(args);
         }
     }
 }

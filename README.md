@@ -41,6 +41,13 @@ Define two Environment variables:
 
 ![ListAssignmentsCommand](./assets/screenshot_result_assignments_list_command.png)
 
+### UnitTest execution command
+
+```
+ moodle-cli.exe tests run --path "C:\Projekte\HTL\TestProject"
+ ```
+
+
  ## Status
  
  [![.NET](https://github.com/jfuerlinger/moodle-cli/actions/workflows/build.yml/badge.svg)](https://github.com/jfuerlinger/moodle-cli/actions/workflows/build.yml)

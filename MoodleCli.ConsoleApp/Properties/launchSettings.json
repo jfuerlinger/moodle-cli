@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MoodleCli.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "tests run --path \"C:\\Projekte\\HTL\\TestProject\""
+    }
+  }
+}

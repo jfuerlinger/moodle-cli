@@ -1,5 +1,6 @@
 ﻿using MoodleCli.ConsoleApp.Commands.Assignments;
 using MoodleCli.ConsoleApp.Commands.Courses;
+using MoodleCli.ConsoleApp.Commands.Tests;
 using MoodleCli.ConsoleApp.Commands.Users;
 using MoodleCli.Core.Model;
 using MoodleCli.Core.Model.Reponses;
@@ -13,19 +14,22 @@ namespace MoodleCli.ConsoleApp.Commands
     {
         private readonly IMoodleService _moodleService;
         private readonly ICompilerService _compilerService;
+        private readonly IUnitTestService _unitTestService;
 
         public MoodleCliRootCommand(
             IMoodleService moodleService,
-            ICompilerService compilerService) : base("Moodle CLI")
+            ICompilerService compilerService,
+            IUnitTestService unitTestService) : base("Moodle CLI")
         {
             _moodleService = moodleService;
             _compilerService = compilerService;
-
+            _unitTestService = unitTestService;
             this.SetHandler(Execute);
 
             AddCommand(new CoursesCommand(moodleService));
             AddCommand(new AssignmentsCommand(moodleService));
             AddCommand(new UsersCommand(moodleService));
+            AddCommand(new TestsCommand(unitTestService));
         }
 
         private async Task Execute()

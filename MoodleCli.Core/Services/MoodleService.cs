@@ -1,9 +1,7 @@
 ﻿using MoodleCli.Core.Model;
 using MoodleCli.Core.Model.Reponses;
-using System;
 using System.Net.Http.Json;
 using System.Web;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoodleCli.Core.Services
 {
@@ -13,11 +11,10 @@ namespace MoodleCli.Core.Services
         private readonly string _username;
         private readonly string _password;
         private string? _token;
-        private object _;
 
         public MoodleService(string username, string password)
         {
-            _httpClient = new HttpClient() { BaseAddress = new Uri("https://edufs.edu.htl-leonding.ac.at/moodle/") }; ;
+            _httpClient = new HttpClient() { BaseAddress = new Uri("https://edufs.edu.htl-leonding.ac.at/moodle/") };
             _username = username;
             _password = password;
         }
