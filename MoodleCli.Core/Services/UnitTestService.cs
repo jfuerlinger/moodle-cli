@@ -25,7 +25,7 @@ namespace MoodleCli.Core.Services
                     .WithValidation(CommandResultValidation.None)
                     .ExecuteBufferedAsync();
 
-                // Result contains:
+                // Result contains from CLIWrap:
                 // -- result.StandardOutput  (string)
                 // -- result.StandardError   (string)
                 // -- result.ExitCode        (int)
